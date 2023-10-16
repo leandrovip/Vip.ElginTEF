@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vip.ElginTEF", "Vip.ElginTEF\Vip.ElginTEF.csproj", "{4C96E9FD-AFFB-4C67-8449-0ABEC92FC114}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vip.ElginTEF.Demo", "Vip.ElginTEF.Demo\Vip.ElginTEF.Demo.csproj", "{795F0DB2-53C3-4FE5-B989-392258EE4CDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C96E9FD-AFFB-4C67-8449-0ABEC92FC114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C96E9FD-AFFB-4C67-8449-0ABEC92FC114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C96E9FD-AFFB-4C67-8449-0ABEC92FC114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C96E9FD-AFFB-4C67-8449-0ABEC92FC114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{795F0DB2-53C3-4FE5-B989-392258EE4CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795F0DB2-53C3-4FE5-B989-392258EE4CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795F0DB2-53C3-4FE5-B989-392258EE4CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795F0DB2-53C3-4FE5-B989-392258EE4CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E04FDF54-A5F7-441B-A5AA-7384B22514CC}
+	EndGlobalSection
+EndGlobal
