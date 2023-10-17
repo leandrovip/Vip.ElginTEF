@@ -1,5 +1,5 @@
 
-<h2 align="center"><strong>Vip.ElginTEF</strong> 💻) </h2> 
+<h2 align="center"><strong>Vip.ElginTEF</strong> 💻 </h2> 
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/leandrovip/Vip.ElginTEF/master/LICENSE">
