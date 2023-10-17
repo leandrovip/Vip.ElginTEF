@@ -34,12 +34,15 @@ jobs:
           echo Version2: $VERSION_PACKAGE
 
       - name: "Setup .NET"
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: "7.0.x"
+          
+      - name: Restore dependencies
+        run: dotnet restore ./src/Vip.ElginTEF/Vip.ElginTEF.csproj --force
 
       - name: Build Project
-        run: dotnet build ./src/Vip.ElginTEF.sln --configuration Release -p:Version=$VERSION_PROJECT
+        run: dotnet build ./src/Vip.ElginTEF/Vip.ElginTEF.csproj --configuration Release -p:Version=$VERSION_PROJECT
 
       - name: Create Package
         run: dotnet pack ./src/Vip.ElginTEF/Vip.ElginTEF.csproj --configuration Release -p:Version=$VERSION_PACKAGE
