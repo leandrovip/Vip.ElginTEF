@@ -53,23 +53,30 @@
             this.rdbReimpressao = new System.Windows.Forms.RadioButton();
             this.rdbPendencias = new System.Windows.Forms.RadioButton();
             this.btnAdministracaoTef = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lblDataTransacao = new System.Windows.Forms.Label();
+            this.txtDataTransacao = new System.Windows.Forms.TextBox();
+            this.lblValorTransacao = new System.Windows.Forms.Label();
+            this.txtValorTransacao = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.lblNsuTransacao = new System.Windows.Forms.Label();
+            this.txtNsuTransacao = new System.Windows.Forms.TextBox();
             this.tbpFuncoes = new System.Windows.Forms.TabControl();
             this.tbpPagamento = new System.Windows.Forms.TabPage();
             this.tbpPagamentoPix = new System.Windows.Forms.TabPage();
             this.tbpAdministracao = new System.Windows.Forms.TabPage();
+            this.btnPagamentoPix = new System.Windows.Forms.Button();
+            this.lblValorPix = new System.Windows.Forms.Label();
+            this.txtValorPix = new System.Windows.Forms.TextBox();
+            this.ptbQrCode = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.gpbTipoOperacao.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tbpFuncoes.SuspendLayout();
             this.tbpPagamento.SuspendLayout();
+            this.tbpPagamentoPix.SuspendLayout();
             this.tbpAdministracao.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbQrCode)).BeginInit();
             this.SuspendLayout();
             // 
             // btnConfiguraPdv
@@ -88,18 +95,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRetorno.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRetorno.Location = new System.Drawing.Point(12, 458);
+            this.txtRetorno.Location = new System.Drawing.Point(12, 393);
             this.txtRetorno.Multiline = true;
             this.txtRetorno.Name = "txtRetorno";
             this.txtRetorno.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtRetorno.Size = new System.Drawing.Size(956, 277);
+            this.txtRetorno.Size = new System.Drawing.Size(951, 238);
             this.txtRetorno.TabIndex = 1;
             // 
             // lblRetorno
             // 
             this.lblRetorno.AutoSize = true;
             this.lblRetorno.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRetorno.Location = new System.Drawing.Point(12, 441);
+            this.lblRetorno.Location = new System.Drawing.Point(12, 376);
             this.lblRetorno.Name = "lblRetorno";
             this.lblRetorno.Size = new System.Drawing.Size(137, 14);
             this.lblRetorno.TabIndex = 2;
@@ -233,7 +240,7 @@
             // 
             this.lblMensagemUsuario.AutoSize = true;
             this.lblMensagemUsuario.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblMensagemUsuario.Location = new System.Drawing.Point(12, 381);
+            this.lblMensagemUsuario.Location = new System.Drawing.Point(12, 317);
             this.lblMensagemUsuario.Name = "lblMensagemUsuario";
             this.lblMensagemUsuario.Size = new System.Drawing.Size(132, 14);
             this.lblMensagemUsuario.TabIndex = 11;
@@ -244,9 +251,9 @@
             this.txtMensagemUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMensagemUsuario.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMensagemUsuario.Location = new System.Drawing.Point(12, 398);
+            this.txtMensagemUsuario.Location = new System.Drawing.Point(12, 334);
             this.txtMensagemUsuario.Name = "txtMensagemUsuario";
-            this.txtMensagemUsuario.Size = new System.Drawing.Size(923, 30);
+            this.txtMensagemUsuario.Size = new System.Drawing.Size(918, 30);
             this.txtMensagemUsuario.TabIndex = 12;
             this.txtMensagemUsuario.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -255,7 +262,7 @@
             this.btnLimpar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLimpar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLimpar.BackgroundImage")));
             this.btnLimpar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnLimpar.Location = new System.Drawing.Point(941, 401);
+            this.btnLimpar.Location = new System.Drawing.Point(937, 336);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(27, 28);
             this.btnLimpar.TabIndex = 14;
@@ -327,49 +334,49 @@
             this.btnAdministracaoTef.UseVisualStyleBackColor = true;
             this.btnAdministracaoTef.Click += new System.EventHandler(this.btnAdministracaoTef_Click);
             // 
-            // label1
+            // lblDataTransacao
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 14);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Data";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblDataTransacao.AutoSize = true;
+            this.lblDataTransacao.Location = new System.Drawing.Point(7, 21);
+            this.lblDataTransacao.Name = "lblDataTransacao";
+            this.lblDataTransacao.Size = new System.Drawing.Size(37, 14);
+            this.lblDataTransacao.TabIndex = 18;
+            this.lblDataTransacao.Text = "Data";
+            this.lblDataTransacao.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox1
+            // txtDataTransacao
             // 
-            this.textBox1.Location = new System.Drawing.Point(10, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(122, 22);
-            this.textBox1.TabIndex = 17;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtDataTransacao.Location = new System.Drawing.Point(10, 37);
+            this.txtDataTransacao.Name = "txtDataTransacao";
+            this.txtDataTransacao.Size = new System.Drawing.Size(122, 22);
+            this.txtDataTransacao.TabIndex = 17;
+            this.txtDataTransacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label2
+            // lblValorTransacao
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(299, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 14);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "R$ Valor";
+            this.lblValorTransacao.AutoSize = true;
+            this.lblValorTransacao.Location = new System.Drawing.Point(299, 21);
+            this.lblValorTransacao.Name = "lblValorTransacao";
+            this.lblValorTransacao.Size = new System.Drawing.Size(58, 14);
+            this.lblValorTransacao.TabIndex = 16;
+            this.lblValorTransacao.Text = "R$ Valor";
             // 
-            // textBox2
+            // txtValorTransacao
             // 
-            this.textBox2.Location = new System.Drawing.Point(302, 37);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(122, 22);
-            this.textBox2.TabIndex = 15;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtValorTransacao.Location = new System.Drawing.Point(302, 37);
+            this.txtValorTransacao.Name = "txtValorTransacao";
+            this.txtValorTransacao.Size = new System.Drawing.Size(122, 22);
+            this.txtValorTransacao.TabIndex = 15;
+            this.txtValorTransacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.lblNsuTransacao);
+            this.groupBox2.Controls.Add(this.txtNsuTransacao);
+            this.groupBox2.Controls.Add(this.txtDataTransacao);
+            this.groupBox2.Controls.Add(this.lblValorTransacao);
+            this.groupBox2.Controls.Add(this.lblDataTransacao);
+            this.groupBox2.Controls.Add(this.txtValorTransacao);
             this.groupBox2.Location = new System.Drawing.Point(10, 75);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(430, 65);
@@ -377,25 +384,28 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Dados Cancelamento";
             // 
-            // label3
+            // lblNsuTransacao
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(154, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 14);
-            this.label3.TabIndex = 20;
-            this.label3.Text = "NSU Transação";
+            this.lblNsuTransacao.AutoSize = true;
+            this.lblNsuTransacao.Location = new System.Drawing.Point(154, 21);
+            this.lblNsuTransacao.Name = "lblNsuTransacao";
+            this.lblNsuTransacao.Size = new System.Drawing.Size(101, 14);
+            this.lblNsuTransacao.TabIndex = 20;
+            this.lblNsuTransacao.Text = "NSU Transação";
             // 
-            // textBox3
+            // txtNsuTransacao
             // 
-            this.textBox3.Location = new System.Drawing.Point(157, 37);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(122, 22);
-            this.textBox3.TabIndex = 19;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtNsuTransacao.Location = new System.Drawing.Point(157, 37);
+            this.txtNsuTransacao.Name = "txtNsuTransacao";
+            this.txtNsuTransacao.Size = new System.Drawing.Size(122, 22);
+            this.txtNsuTransacao.TabIndex = 19;
+            this.txtNsuTransacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // tbpFuncoes
             // 
+            this.tbpFuncoes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbpFuncoes.Controls.Add(this.tbpPagamento);
             this.tbpFuncoes.Controls.Add(this.tbpPagamentoPix);
             this.tbpFuncoes.Controls.Add(this.tbpAdministracao);
@@ -423,6 +433,11 @@
             // 
             // tbpPagamentoPix
             // 
+            this.tbpPagamentoPix.Controls.Add(this.label4);
+            this.tbpPagamentoPix.Controls.Add(this.ptbQrCode);
+            this.tbpPagamentoPix.Controls.Add(this.lblValorPix);
+            this.tbpPagamentoPix.Controls.Add(this.txtValorPix);
+            this.tbpPagamentoPix.Controls.Add(this.btnPagamentoPix);
             this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 23);
             this.tbpPagamentoPix.Name = "tbpPagamentoPix";
             this.tbpPagamentoPix.Padding = new System.Windows.Forms.Padding(3);
@@ -444,10 +459,56 @@
             this.tbpAdministracao.Text = "Administração";
             this.tbpAdministracao.UseVisualStyleBackColor = true;
             // 
+            // btnPagamentoPix
+            // 
+            this.btnPagamentoPix.Location = new System.Drawing.Point(15, 78);
+            this.btnPagamentoPix.Name = "btnPagamentoPix";
+            this.btnPagamentoPix.Size = new System.Drawing.Size(129, 52);
+            this.btnPagamentoPix.TabIndex = 4;
+            this.btnPagamentoPix.Text = "Pagamento PIX TEF";
+            this.btnPagamentoPix.UseVisualStyleBackColor = true;
+            this.btnPagamentoPix.Click += new System.EventHandler(this.btnPagamentoPix_Click);
+            // 
+            // lblValorPix
+            // 
+            this.lblValorPix.AutoSize = true;
+            this.lblValorPix.Location = new System.Drawing.Point(12, 24);
+            this.lblValorPix.Name = "lblValorPix";
+            this.lblValorPix.Size = new System.Drawing.Size(58, 14);
+            this.lblValorPix.TabIndex = 7;
+            this.lblValorPix.Text = "R$ Valor";
+            // 
+            // txtValorPix
+            // 
+            this.txtValorPix.Location = new System.Drawing.Point(15, 40);
+            this.txtValorPix.Name = "txtValorPix";
+            this.txtValorPix.Size = new System.Drawing.Size(138, 22);
+            this.txtValorPix.TabIndex = 6;
+            this.txtValorPix.Text = "15,00";
+            this.txtValorPix.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // ptbQrCode
+            // 
+            this.ptbQrCode.Location = new System.Drawing.Point(216, 40);
+            this.ptbQrCode.Name = "ptbQrCode";
+            this.ptbQrCode.Size = new System.Drawing.Size(187, 159);
+            this.ptbQrCode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbQrCode.TabIndex = 8;
+            this.ptbQrCode.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(213, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 14);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "QRCode PIX";
+            // 
             // frmPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(980, 747);
+            this.ClientSize = new System.Drawing.Size(975, 643);
             this.Controls.Add(this.tbpFuncoes);
             this.Controls.Add(this.btnLimpar);
             this.Controls.Add(this.txtMensagemUsuario);
@@ -469,7 +530,10 @@
             this.tbpFuncoes.ResumeLayout(false);
             this.tbpPagamento.ResumeLayout(false);
             this.tbpPagamento.PerformLayout();
+            this.tbpPagamentoPix.ResumeLayout(false);
+            this.tbpPagamentoPix.PerformLayout();
             this.tbpAdministracao.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ptbQrCode)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -501,17 +565,22 @@
         private System.Windows.Forms.RadioButton rdbReimpressao;
         private System.Windows.Forms.RadioButton rdbPendencias;
         private System.Windows.Forms.Button btnAdministracaoTef;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label lblDataTransacao;
+        private System.Windows.Forms.TextBox txtDataTransacao;
+        private System.Windows.Forms.Label lblValorTransacao;
+        private System.Windows.Forms.TextBox txtValorTransacao;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label lblNsuTransacao;
+        private System.Windows.Forms.TextBox txtNsuTransacao;
         private System.Windows.Forms.TabControl tbpFuncoes;
         private System.Windows.Forms.TabPage tbpPagamento;
         private System.Windows.Forms.TabPage tbpPagamentoPix;
         private System.Windows.Forms.TabPage tbpAdministracao;
+        private System.Windows.Forms.Label lblValorPix;
+        private System.Windows.Forms.TextBox txtValorPix;
+        private System.Windows.Forms.Button btnPagamentoPix;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox ptbQrCode;
     }
 }
 

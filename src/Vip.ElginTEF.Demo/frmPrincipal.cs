@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Vip.ElginTEF.Enums;
 using Vip.ElginTEF.Events;
@@ -85,6 +87,56 @@ namespace Vip.ElginTEF.Demo
             service.Dispose();
         }
 
+        private void btnPagamentoPix_Click(object sender, EventArgs e)
+        {
+            #region Validações
+
+            if (txtValorPix.Text.IsNullOrEmpty())
+            {
+                MessageBox.Show("Informe um valor e tente novamente.");
+                return;
+            }
+
+            #endregion
+
+            var service = ObterServico();
+            service.OnMensagemUsuario += ImprimirMensagemUsuario;
+            service.OnReceberInformacao += EnviarInformacaoFluxo;
+            service.OnExibirQrCodePix += ExibirQrCodePix;
+
+            txtMensagemUsuario.Text = "Transação PIX TEF iniciada";
+            txtMensagemUsuario.Refresh();
+
+            var valorRequest = txtValorPix.Text.ToDecimal();
+            var response = service.RealizarPagamentoPIX(valorRequest);
+            if (response.IsNull() || !response.Retorno)
+            {
+                MessageBox.Show($"Houve um erro na transação!\r\nMensagem: {response?.Mensagem}");
+                return;
+            }
+
+            txtMensagemUsuario.Text = "Transação Finalizada";
+            txtMensagemUsuario.Refresh();
+
+            ImprimirRetorno("RealizarPagamento", response);
+
+            if (response.Tef.PodeConfirmar)
+            {
+                ImprimirRetorno("CodigoAutorizacao", response.Tef.CodigoAutorizacao);
+                ImprimirRetorno("NsuTransacao", response.Tef.NsuTransacao);
+                ImprimirRetorno("FormaPagamento", response.Tef.FormaPagamento);
+                ImprimirRetorno("ComprovanteUsuario", response.Tef.ComprovanteDiferenciadoPortador);
+                ImprimirRetorno("ComprovanteLoja", response.Tef.ComprovanteDiferenciadoLoja);
+            }
+
+            txtMensagemUsuario.Text = "Aguardando próxima transação";
+            txtMensagemUsuario.Refresh();
+            ptbQrCode.Image = null;
+            ptbQrCode.Refresh();
+
+            service.Dispose();
+        }
+
         private void btnAdministracaoTef_Click(object sender, EventArgs e)
         {
             var service = ObterServico();
@@ -94,7 +146,9 @@ namespace Vip.ElginTEF.Demo
             txtMensagemUsuario.Text = "Administração TEF iniciada";
             txtMensagemUsuario.Refresh();
 
-            var request = new AdmRequest(ObterTipoOperacaoAdm(), "lojista", "lojista1#");
+            var dataTransacao = txtDataTransacao.Text.IsNullOrEmpty() ? (DateTime?) null : DateTime.Parse(txtDataTransacao.Text);
+            var valorTransacao = txtValorTransacao.Text.IsNullOrEmpty() ? (decimal?) null : txtValorTransacao.Text.ToDecimal();
+            var request = new AdmRequest(ObterTipoOperacaoAdm(), "lojista", "lojista1#", dataTransacao, txtNsuTransacao.Text, valorTransacao);
             var response = service.RealizarAdm(request);
             if (response.IsNull() || !response.Retorno)
             {
@@ -140,6 +194,13 @@ namespace Vip.ElginTEF.Demo
             }
 
             ((TefService) sender).InformacaoColeta = informacaoRetorno;
+        }
+
+        private void ExibirQrCodePix(object sender, ExibirQrCodePixEventArgs e)
+        {
+            if (e.QrCode.IsNull()) return;
+            ptbQrCode.Image = ByteArrayToImage(e.QrCode);
+            ptbQrCode.Refresh();
         }
 
         private void ImprimirMensagemUsuario(object sender, MensagemUsuarioEventArgs e)
@@ -223,6 +284,12 @@ namespace Vip.ElginTEF.Demo
             txtRetorno.Text += mensagem;
             txtRetorno.SelectionStart = txtRetorno.TextLength;
             txtRetorno.ScrollToCaret();
+        }
+
+        private Image ByteArrayToImage(byte[] byteArray)
+        {
+            using (var ms = new MemoryStream(byteArray))
+                return Image.FromStream(ms);
         }
 
         #endregion

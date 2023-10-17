@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <Title>Vip.ElginTEF</Title>
+    <Company>Leandro Ferreira</Company>
+    <Description>Biblioteca para controle e fluxo de transações eletrônicas via TEF Elgin</Description>
+    <Copyright>VIP Soluções</Copyright>
+    <PackageProjectUrl>https://github.com/leandrovip/Vip.ElginTEF</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/leandrovip/Vip.ElginTEF</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>vip, tef, elgin</PackageTags>
+    <PackageReleaseNotes>Versão Inicial</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

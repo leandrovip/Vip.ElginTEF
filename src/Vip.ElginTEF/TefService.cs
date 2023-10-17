@@ -74,6 +74,8 @@ namespace Vip.ElginTEF
         /// </summary>
         public event EventHandler<ReceberInformacaoEventArgs> OnReceberInformacao;
 
+        public event EventHandler<ExibirQrCodePixEventArgs> OnExibirQrCodePix;
+
         #endregion Events
 
         #region Propriedades
@@ -224,6 +226,59 @@ namespace Vip.ElginTEF
             return response;
         }
 
+        public BaseResponse<TransacaoResponse> RealizarPagamentoPIX(decimal valorPagamento)
+        {
+            Guard.Against<VipException>(Inativo, "Componente não está ativo");
+            Guard.Against<VipException>(valorPagamento <= 0, "Valor de pagamento inválido");
+
+            var operacao = IniciarOperacao();
+            if (!operacao.Retorno)
+            {
+                OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Não foi possível iniciar a transação"));
+                var erroResponse = new BaseResponse<TransacaoResponse>();
+                erroResponse.SetarErro(operacao.Tef.Retorno.ToInt(9), "Não foi possível iniciar a transação");
+                return erroResponse;
+            }
+
+            OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Aguarde, iniciando pagamento"));
+
+            var valorFormatado = valorPagamento.ToString("N").OnlyNumbers();
+            var modelInicial = new {operacao.Tef.Sequencial, ValorTotal = valorFormatado};
+            var payload = modelInicial.Serialize();
+            var retorno = _library.RealizarPixTEF(payload, true);
+            var pagamentoCommand = FinalizaComando<BaseResponse<FluxoResponse>>(retorno);
+            if (pagamentoCommand.IsNull() || pagamentoCommand.Tef.ColetaRetorno.IsNull() || pagamentoCommand.Tef.ColetaRetorno == "9")
+            {
+                if (pagamentoCommand.Tef.ColetaRetorno.IsNull())
+                    FinalizarOperacaoTEF();
+
+                OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Não foi possível iniciar o pagamento"));
+                var errorResponse = new BaseResponse<TransacaoResponse>();
+                errorResponse.SetarErro(pagamentoCommand.Tef.ColetaRetorno.ToInt(), pagamentoCommand.Tef.MensagemResultado);
+                return errorResponse;
+            }
+
+            OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(pagamentoCommand?.Tef.MensagemResultado));
+
+            AguardandoComando = true;
+            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand);
+            var response = ChamarFluxoPagamento(TipoFluxo.PagamentoPix, 0, fluxoRequest);
+            AguardandoComando = false;
+
+            if (response.Tef.IsNull() || response.Tef.HouveErro)
+            {
+                if (response.Retorno) response.SetarErro(response.Tef.MensagemResultado);
+            }
+            else if (response.Tef.PodeConfirmar)
+            {
+                OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(response?.Tef.MensagemResultado));
+                ConfirmarOperacaoTEF(response.Tef.Sequencial, TipoAcao.Confirmar);
+            }
+
+            FinalizarOperacaoTEF();
+            return response;
+        }
+
         public BaseResponse<TransacaoResponse> RealizarAdm(AdmRequest request)
         {
             Guard.Against<VipException>(Inativo, "Componente não está ativo");
@@ -323,11 +378,16 @@ namespace Vip.ElginTEF
                 retornoFluxo = tipoFluxo switch
                 {
                     TipoFluxo.Pagamento => _library.RealizarPagamentoTEF(codigoOperacao, payload, false),
+                    TipoFluxo.PagamentoPix => _library.RealizarPixTEF(payload, false),
                     TipoFluxo.Adm => _library.RealizarAdmTEF(codigoOperacao, payload, false),
-                    _ => throw new NotImplementedException(),
+                    _ => throw new NotImplementedException("Sem implementação para o tipo selecionado"),
                 };
 
                 var fluxoCommand = FinalizaComando<BaseResponse<FluxoResponse>>(retornoFluxo);
+
+                if (tipoFluxo == TipoFluxo.PagamentoPix && retornoFluxo.Contains("QRCODE"))
+                    OnExibirQrCodePix.Raise(this, ExibirQrCodePixEventArgs.Map(fluxoCommand.Tef.MensagemResultado));
+
                 fluxoRequest = ObterNovoFluxoRequest(fluxoCommand);
                 if (fluxoRequest.IsNull() || fluxoRequest.ColetaRetorno == "9")
                 {
@@ -381,7 +441,10 @@ namespace Vip.ElginTEF
                         fluxo.ColetaInformacao = _valorTransacao.IsNotNullOrEmpty() ? _valorTransacao : ObterInformacaoColeta(args);
                         break;
                     default:
-                        fluxo.ColetaInformacao = ObterInformacaoColeta(args);
+                        var informacao = ObterInformacaoColeta(args);
+                        if (informacao.IsNullOrEmpty()) fluxo.ColetaRetorno = "9";
+
+                        fluxo.ColetaInformacao = informacao;
                         break;
                 }
             }

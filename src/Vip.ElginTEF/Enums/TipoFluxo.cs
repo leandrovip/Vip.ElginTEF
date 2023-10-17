@@ -3,5 +3,6 @@
 public enum TipoFluxo
 {
     Adm,
-    Pagamento
+    Pagamento,
+    PagamentoPix
 }

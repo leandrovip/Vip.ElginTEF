@@ -22,7 +22,13 @@ public class MensagemUsuarioEventArgs : EventArgs
 
     #region Método Estático
 
-    public static MensagemUsuarioEventArgs Novo(string mensagem) => new MensagemUsuarioEventArgs(mensagem);
+    public static MensagemUsuarioEventArgs Novo(string mensagem)
+    {
+        if (mensagem.Contains("QRCODE;"))
+            mensagem = "Aguardando leitura do QRCode";
+
+        return new MensagemUsuarioEventArgs(mensagem);
+    }
 
     #endregion
 }
