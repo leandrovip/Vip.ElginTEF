@@ -45,11 +45,11 @@ public class TransacaoResponse
     {
         return Transacao.ToLower() switch
         {
-            "Cartao Vender" => TipoTransacao.Pagamento,
+            "cartao vender" => TipoTransacao.Pagamento,
             "administracao cancelar" => TipoTransacao.Cancelamento,
             "administracao pendente" => TipoTransacao.Pendencia,
             "administracao extrato transacao" => TipoTransacao.Extrato,
-            "Administracao Reimprimir" => TipoTransacao.Reimpressao,
+            "administracao reimprimir" => TipoTransacao.Reimpressao,
             _ => TipoTransacao.NaoIdentificado
         };
     }
