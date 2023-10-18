@@ -1,4 +1,5 @@
-﻿using Vip.ElginTEF.Extensions;
+﻿using Vip.ElginTEF.Enums;
+using Vip.ElginTEF.Extensions;
 
 namespace Vip.ElginTEF.Response;
 

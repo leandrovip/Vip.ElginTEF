@@ -1,10 +1,12 @@
-﻿namespace Vip.ElginTEF.Enums;
+﻿using System.ComponentModel;
+
+namespace Vip.ElginTEF.Enums;
 
 public enum TipoInformacao
 {
-    Geral,
-    Alfabetico,
-    DataHora,
-    Numerico,
-    Alfanumerico
+    [Description("Geral")] Geral,
+    [Description("Texto")] Alfabetico,
+    [Description("dd/MM/aa")] DataHora,
+    [Description("Numérico")] Numerico,
+    [Description("Texto e Número")] Alfanumerico
 }

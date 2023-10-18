@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Vip.ElginTEF.Response;
+namespace Vip.ElginTEF.Enums;
 
 public enum TipoTransacao
 {
