@@ -208,7 +208,7 @@ namespace Vip.ElginTEF
             OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(pagamentoCommand?.Tef.MensagemResultado));
 
             AguardandoComando = true;
-            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand);
+            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand, TipoFluxo.Pagamento);
             var response = ChamarFluxoPagamento(TipoFluxo.Pagamento, request.CodigoOperacao, fluxoRequest);
             AguardandoComando = false;
 
@@ -261,7 +261,7 @@ namespace Vip.ElginTEF
             OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(pagamentoCommand?.Tef.MensagemResultado));
 
             AguardandoComando = true;
-            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand);
+            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand, TipoFluxo.Pagamento);
             var response = ChamarFluxoPagamento(TipoFluxo.PagamentoPix, 0, fluxoRequest);
             AguardandoComando = false;
 
@@ -321,7 +321,7 @@ namespace Vip.ElginTEF
             OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(admCommand?.Tef.MensagemResultado));
 
             AguardandoComando = true;
-            var fluxoRequest = ObterNovoFluxoRequest(admCommand);
+            var fluxoRequest = ObterNovoFluxoRequest(admCommand, TipoFluxo.Pagamento);
             var response = ChamarFluxoPagamento(TipoFluxo.Adm, request.CodigoOperacao, fluxoRequest);
             AguardandoComando = false;
 
@@ -388,7 +388,7 @@ namespace Vip.ElginTEF
                 if (tipoFluxo == TipoFluxo.PagamentoPix && retornoFluxo.Contains("QRCODE"))
                     OnExibirQrCodePix.Raise(this, ExibirQrCodePixEventArgs.Map(fluxoCommand.Tef.MensagemResultado));
 
-                fluxoRequest = ObterNovoFluxoRequest(fluxoCommand);
+                fluxoRequest = ObterNovoFluxoRequest(fluxoCommand, tipoFluxo);
                 if (fluxoRequest.IsNull() || fluxoRequest.ColetaRetorno == "9")
                 {
                     OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(fluxoCommand?.Tef.MensagemResultado));
@@ -403,7 +403,7 @@ namespace Vip.ElginTEF
             return response;
         }
 
-        private FluxoRequest ObterNovoFluxoRequest(BaseResponse<FluxoResponse> command)
+        private FluxoRequest ObterNovoFluxoRequest(BaseResponse<FluxoResponse> command, TipoFluxo tipoFluxo)
         {
             #region Validação
 
@@ -425,7 +425,7 @@ namespace Vip.ElginTEF
 
             if (command.Tef.ColetaOpcao.IsNotNullOrEmpty() || command.Tef.ColetaTipo.IsNotNullOrEmpty())
             {
-                var args = ReceberInformacaoEventArgs.Novo(command.Tef.ObterListaOpcao(), command.Tef.TipoInformacao, command.Tef.MensagemResultado);
+                var args = ReceberInformacaoEventArgs.Novo(tipoFluxo, command.Tef.ObterListaOpcao(), command.Tef.TipoInformacao, command.Tef.MensagemResultado);
                 switch (command.Tef.ColetaPalavraChave?.ToLower())
                 {
                     case "transacao_parcela":

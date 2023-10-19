@@ -9,6 +9,7 @@ public class ReceberInformacaoEventArgs : EventArgs
 {
     #region Propriedades
 
+    public TipoFluxo TipoFluxo { get; set; }
     public IEnumerable<string> Opcoes { get; set; }
     public TipoInformacao TipoInformacao { get; set; }
     public string MensagemUsuario { get; set; }
@@ -18,8 +19,9 @@ public class ReceberInformacaoEventArgs : EventArgs
 
     #region Construtores
 
-    public ReceberInformacaoEventArgs(IEnumerable<string> opcoes, TipoInformacao tipoInformacao, string mensagem)
+    public ReceberInformacaoEventArgs(TipoFluxo tipoFluxo, IEnumerable<string> opcoes, TipoInformacao tipoInformacao, string mensagem)
     {
+        TipoFluxo = tipoFluxo;
         Opcoes = opcoes ?? new List<string>();
         TipoInformacao = tipoInformacao;
         MensagemUsuario = mensagem;
@@ -29,7 +31,7 @@ public class ReceberInformacaoEventArgs : EventArgs
 
     #region Métodos Estáticos
 
-    public static ReceberInformacaoEventArgs Novo(IEnumerable<string> opcoes, TipoInformacao tipo, string mensagem) => new(opcoes, tipo, mensagem);
+    public static ReceberInformacaoEventArgs Novo(TipoFluxo tipoFluxo, IEnumerable<string> opcoes, TipoInformacao tipo, string mensagem) => new(tipoFluxo, opcoes, tipo, mensagem);
 
     #endregion
 }
