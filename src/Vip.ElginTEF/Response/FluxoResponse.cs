@@ -65,7 +65,7 @@ internal class FluxoResponse
             "A" => TipoInformacao.Alfabetico,
             "D" => TipoInformacao.DataHora,
             "N" => TipoInformacao.Numerico,
-            "X" => TipoInformacao.Numerico,
+            "X" => TipoInformacao.Alfanumerico,
             _ => TipoInformacao.Geral
         };
     }

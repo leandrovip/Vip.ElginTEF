@@ -261,7 +261,7 @@ namespace Vip.ElginTEF
             OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(pagamentoCommand?.Tef.MensagemResultado));
 
             AguardandoComando = true;
-            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand, TipoFluxo.Pagamento);
+            var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand, TipoFluxo.PagamentoPix);
             var response = ChamarFluxoPagamento(TipoFluxo.PagamentoPix, 0, fluxoRequest);
             AguardandoComando = false;
 
@@ -321,7 +321,7 @@ namespace Vip.ElginTEF
             OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(admCommand?.Tef.MensagemResultado));
 
             AguardandoComando = true;
-            var fluxoRequest = ObterNovoFluxoRequest(admCommand, TipoFluxo.Pagamento);
+            var fluxoRequest = ObterNovoFluxoRequest(admCommand, TipoFluxo.Adm);
             var response = ChamarFluxoPagamento(TipoFluxo.Adm, request.CodigoOperacao, fluxoRequest);
             AguardandoComando = false;
 
