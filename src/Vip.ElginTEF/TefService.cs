@@ -428,6 +428,9 @@ namespace Vip.ElginTEF
                 var args = ReceberInformacaoEventArgs.Novo(tipoFluxo, command.Tef.ObterListaOpcao(), command.Tef.TipoInformacao, command.Tef.MensagemResultado);
                 switch (command.Tef.ColetaPalavraChave?.ToLower())
                 {
+                    case "transacao_pagamento":
+                        fluxo.ColetaInformacao = _parcelasPagamento > 1 ? "Parcelado" : "A vista";
+                        break;
                     case "transacao_parcela":
                         fluxo.ColetaInformacao = _parcelasPagamento.ToString();
                         break;
