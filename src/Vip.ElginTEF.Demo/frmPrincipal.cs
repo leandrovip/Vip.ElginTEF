@@ -224,14 +224,14 @@ namespace Vip.ElginTEF.Demo
             var tef = new TefService();
 
             tef.Configuracao.TextoPinpad = "VipERP PDV";
-            tef.Configuracao.VersaoAC = "1.1.157";
+            tef.Configuracao.VersaoAC = "1.1.600";
             tef.Configuracao.NomeEstabelecimento = "VIP";
             tef.Configuracao.Loja = "001";
             tef.Configuracao.IdentificadorPontoCaptura = "T0004";
             tef.Configuracao.IpClientTCP = "127.0.0.1";
             tef.Configuracao.PortaClientTCP = 60906;
             tef.ModeloLib = ModeloLib.StdCall;
-            tef.CaminhoLib = @".\E1_Tef01.dll";
+            tef.CaminhoLib = $@".\{txtNomeDll.Text}";
 
             tef.Ativar();
 
