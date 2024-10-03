@@ -63,20 +63,22 @@
             this.tbpFuncoes = new System.Windows.Forms.TabControl();
             this.tbpPagamento = new System.Windows.Forms.TabPage();
             this.tbpPagamentoPix = new System.Windows.Forms.TabPage();
-            this.tbpAdministracao = new System.Windows.Forms.TabPage();
-            this.btnPagamentoPix = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ptbQrCode = new System.Windows.Forms.PictureBox();
             this.lblValorPix = new System.Windows.Forms.Label();
             this.txtValorPix = new System.Windows.Forms.TextBox();
-            this.ptbQrCode = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btnPagamentoPix = new System.Windows.Forms.Button();
+            this.tbpAdministracao = new System.Windows.Forms.TabPage();
+            this.txtNomeDll = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.gpbTipoOperacao.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tbpFuncoes.SuspendLayout();
             this.tbpPagamento.SuspendLayout();
             this.tbpPagamentoPix.SuspendLayout();
-            this.tbpAdministracao.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbQrCode)).BeginInit();
+            this.tbpAdministracao.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConfiguraPdv
@@ -438,36 +440,31 @@
             this.tbpPagamentoPix.Controls.Add(this.lblValorPix);
             this.tbpPagamentoPix.Controls.Add(this.txtValorPix);
             this.tbpPagamentoPix.Controls.Add(this.btnPagamentoPix);
-            this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 23);
+            this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 22);
             this.tbpPagamentoPix.Name = "tbpPagamentoPix";
             this.tbpPagamentoPix.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpPagamentoPix.Size = new System.Drawing.Size(948, 214);
+            this.tbpPagamentoPix.Size = new System.Drawing.Size(948, 215);
             this.tbpPagamentoPix.TabIndex = 1;
             this.tbpPagamentoPix.Text = "Pagamento PIX";
             this.tbpPagamentoPix.UseVisualStyleBackColor = true;
             // 
-            // tbpAdministracao
+            // label4
             // 
-            this.tbpAdministracao.Controls.Add(this.groupBox1);
-            this.tbpAdministracao.Controls.Add(this.groupBox2);
-            this.tbpAdministracao.Controls.Add(this.btnAdministracaoTef);
-            this.tbpAdministracao.Location = new System.Drawing.Point(4, 23);
-            this.tbpAdministracao.Name = "tbpAdministracao";
-            this.tbpAdministracao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpAdministracao.Size = new System.Drawing.Size(948, 214);
-            this.tbpAdministracao.TabIndex = 2;
-            this.tbpAdministracao.Text = "Administração";
-            this.tbpAdministracao.UseVisualStyleBackColor = true;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(213, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 14);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "QRCode PIX";
             // 
-            // btnPagamentoPix
+            // ptbQrCode
             // 
-            this.btnPagamentoPix.Location = new System.Drawing.Point(15, 78);
-            this.btnPagamentoPix.Name = "btnPagamentoPix";
-            this.btnPagamentoPix.Size = new System.Drawing.Size(129, 52);
-            this.btnPagamentoPix.TabIndex = 4;
-            this.btnPagamentoPix.Text = "Pagamento PIX TEF";
-            this.btnPagamentoPix.UseVisualStyleBackColor = true;
-            this.btnPagamentoPix.Click += new System.EventHandler(this.btnPagamentoPix_Click);
+            this.ptbQrCode.Location = new System.Drawing.Point(216, 40);
+            this.ptbQrCode.Name = "ptbQrCode";
+            this.ptbQrCode.Size = new System.Drawing.Size(187, 159);
+            this.ptbQrCode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbQrCode.TabIndex = 8;
+            this.ptbQrCode.TabStop = false;
             // 
             // lblValorPix
             // 
@@ -487,28 +484,55 @@
             this.txtValorPix.Text = "15,00";
             this.txtValorPix.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // ptbQrCode
+            // btnPagamentoPix
             // 
-            this.ptbQrCode.Location = new System.Drawing.Point(216, 40);
-            this.ptbQrCode.Name = "ptbQrCode";
-            this.ptbQrCode.Size = new System.Drawing.Size(187, 159);
-            this.ptbQrCode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbQrCode.TabIndex = 8;
-            this.ptbQrCode.TabStop = false;
+            this.btnPagamentoPix.Location = new System.Drawing.Point(15, 78);
+            this.btnPagamentoPix.Name = "btnPagamentoPix";
+            this.btnPagamentoPix.Size = new System.Drawing.Size(129, 52);
+            this.btnPagamentoPix.TabIndex = 4;
+            this.btnPagamentoPix.Text = "Pagamento PIX TEF";
+            this.btnPagamentoPix.UseVisualStyleBackColor = true;
+            this.btnPagamentoPix.Click += new System.EventHandler(this.btnPagamentoPix_Click);
             // 
-            // label4
+            // tbpAdministracao
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(213, 23);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(83, 14);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "QRCode PIX";
+            this.tbpAdministracao.Controls.Add(this.groupBox1);
+            this.tbpAdministracao.Controls.Add(this.groupBox2);
+            this.tbpAdministracao.Controls.Add(this.btnAdministracaoTef);
+            this.tbpAdministracao.Location = new System.Drawing.Point(4, 22);
+            this.tbpAdministracao.Name = "tbpAdministracao";
+            this.tbpAdministracao.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpAdministracao.Size = new System.Drawing.Size(948, 215);
+            this.tbpAdministracao.TabIndex = 2;
+            this.tbpAdministracao.Text = "Administração";
+            this.tbpAdministracao.UseVisualStyleBackColor = true;
+            // 
+            // txtNomeDll
+            // 
+            this.txtNomeDll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNomeDll.Location = new System.Drawing.Point(766, 42);
+            this.txtNomeDll.Name = "txtNomeDll";
+            this.txtNomeDll.Size = new System.Drawing.Size(197, 22);
+            this.txtNomeDll.TabIndex = 21;
+            this.txtNomeDll.Text = "E1_Tef_hml.dll";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(763, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 14);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Nome da DLL";
             // 
             // frmPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(975, 643);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtNomeDll);
             this.Controls.Add(this.tbpFuncoes);
             this.Controls.Add(this.btnLimpar);
             this.Controls.Add(this.txtMensagemUsuario);
@@ -532,8 +556,8 @@
             this.tbpPagamento.PerformLayout();
             this.tbpPagamentoPix.ResumeLayout(false);
             this.tbpPagamentoPix.PerformLayout();
-            this.tbpAdministracao.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ptbQrCode)).EndInit();
+            this.tbpAdministracao.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -581,6 +605,8 @@
         private System.Windows.Forms.Button btnPagamentoPix;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox ptbQrCode;
+        private System.Windows.Forms.TextBox txtNomeDll;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -443,6 +443,9 @@ namespace Vip.ElginTEF
                     case "transacao_valor":
                         fluxo.ColetaInformacao = _valorTransacao.IsNotNullOrEmpty() ? _valorTransacao : ObterInformacaoColeta(args);
                         break;
+                    case "terminal":
+                        fluxo.ColetaInformacao = ObterInformacaoColeta(args);
+                        break;
                     default:
                         var informacao = ObterInformacaoColeta(args);
                         if (informacao.IsNullOrEmpty()) fluxo.ColetaRetorno = "9";
