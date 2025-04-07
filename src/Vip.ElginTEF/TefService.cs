@@ -134,12 +134,14 @@ namespace Vip.ElginTEF
 
         public void Desativar()
         {
-            if (_library != null)
-            {
-                _library.Dispose();
-                _library = null;
-            }
+            // Remove temporariamente para funcionamento com o TEF HUB
+            //if (_library != null)
+            //{
+            //    _library.Dispose();
+            //    _library = null;
+            //}
 
+            _library = null;
             Ativo = false;
         }
 

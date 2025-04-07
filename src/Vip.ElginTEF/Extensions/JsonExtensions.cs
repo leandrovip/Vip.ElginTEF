@@ -21,7 +21,7 @@ internal static class JsonExtensions
         var defaultContract = new JsonContractResolver();
         return new JsonSerializerSettings
         {
-            ContractResolver = defaultContract, 
+            ContractResolver = defaultContract,
             NullValueHandling = NullValueHandling.Ignore,
             Culture = CultureInfo.GetCultureInfo("pt-BR")
         };

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Vip.ElginTEF.Core
 {
@@ -21,7 +22,17 @@ namespace Vip.ElginTEF.Core
         /// <inheritdoc />
         public object MarshalNativeToManaged(IntPtr pNativeData)
         {
-            return Marshal.PtrToStringAnsi(pNativeData);
+            if (pNativeData == IntPtr.Zero)
+                return null;
+
+            var len = 0;
+            while (Marshal.ReadByte(pNativeData, len) != 0)
+                len++;
+
+            var buffer = new byte[len];
+            Marshal.Copy(pNativeData, buffer, 0, len);
+
+            return Encoding.UTF8.GetString(buffer);
         }
 
         /// <inheritdoc />
