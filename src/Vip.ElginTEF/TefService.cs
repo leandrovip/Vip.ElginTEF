@@ -18,6 +18,7 @@ namespace Vip.ElginTEF
         #region Fields
 
         private ILibrary _library;
+        private bool _disposed;
         private bool _aguardandoComando;
         private ModeloLib _modeloLib;
         private string _caminhoLib;
@@ -134,14 +135,12 @@ namespace Vip.ElginTEF
 
         public void Desativar()
         {
-            // Remove temporariamente para funcionamento com o TEF HUB
-            //if (_library != null)
-            //{
-            //    _library.Dispose();
-            //    _library = null;
-            //}
+            if (_library != null)
+            {
+                _library.Dispose();
+                _library = null;
+            }
 
-            _library = null;
             Ativo = false;
         }
 
@@ -484,6 +483,9 @@ namespace Vip.ElginTEF
 
         private void Dispose(bool disposing)
         {
+            if (_disposed) return;
+            _disposed = true;
+
             if (Ativo) Desativar();
             if (disposing) GC.SuppressFinalize(this);
         }

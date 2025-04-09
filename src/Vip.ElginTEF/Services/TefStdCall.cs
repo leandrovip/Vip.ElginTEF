@@ -12,7 +12,6 @@ namespace Vip.ElginTEF.Services
         private class Delegates
         {
             [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-            //[return: MarshalAs(UnmanagedType.SysInt)]
             public delegate int GetProdutoTef();
 
             [UnmanagedFunctionPointer(CallingConvention.StdCall)]

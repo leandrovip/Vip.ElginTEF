@@ -202,16 +202,28 @@ namespace Vip.ElginTEF.Core
         /// <inheritdoc />
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         protected override bool ReleaseHandle()
-
         {
-            if (IsInvalid) return true;
+            try
+            {
+                if (IsInvalid) return true;
 
-            var ret = LibLoader.FreeLibrary(handle);
+                // Libera delegates gerenciados
+                methodCache.Clear();
 
-            if (ret)
+                // Não chama FreeLibrary, pois o unload é lazy
+                //    var ret = LibLoader.FreeLibrary(handle);
+                //    if (ret)
+                //        SetHandleAsInvalid();
+
+                // Apenas marca o handle como inválido
                 SetHandleAsInvalid();
 
-            return ret;
+                return true;
+            }
+            catch
+            {
+                return true;
+            }
         }
 
         /// <summary>
