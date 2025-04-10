@@ -112,6 +112,10 @@ namespace Vip.ElginTEF.Demo
             if (response.IsNull() || !response.Retorno)
             {
                 MessageBox.Show($"Houve um erro na transação!\r\nMensagem: {response?.Mensagem}");
+                txtMensagemUsuario.Text = "Aguardando próxima transação";
+                txtMensagemUsuario.Refresh();
+                ptbQrCode.Image = null;
+                ptbQrCode.Refresh();
                 return;
             }
 
@@ -232,6 +236,7 @@ namespace Vip.ElginTEF.Demo
             tef.Configuracao.PortaClientTCP = 60906;
             tef.ModeloLib = ModeloLib.StdCall;
             tef.CaminhoLib = $@".\{txtNomeDll.Text}";
+            tef.Timeout = 30;
 
             tef.Ativar();
 

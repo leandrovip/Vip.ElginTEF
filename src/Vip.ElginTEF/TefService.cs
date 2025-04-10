@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Vip.ElginTEF.Enums;
 using Vip.ElginTEF.Events;
 using Vip.ElginTEF.Exceptions;
@@ -86,6 +87,11 @@ namespace Vip.ElginTEF
         public bool Inativo => !Ativo;
 
         public Configuracao Configuracao { get; private set; }
+
+        /// <summary>
+        /// Timeout em segundos
+        /// </summary>
+        public int Timeout { get; set; } = 240;
 
         public bool AguardandoComando
         {
@@ -263,12 +269,14 @@ namespace Vip.ElginTEF
 
             AguardandoComando = true;
             var fluxoRequest = ObterNovoFluxoRequest(pagamentoCommand, TipoFluxo.PagamentoPix);
-            var response = ChamarFluxoPagamento(TipoFluxo.PagamentoPix, 0, fluxoRequest);
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(Timeout));
+            var response = ChamarFluxoPagamento(TipoFluxo.PagamentoPix, 0, fluxoRequest, cts.Token);
             AguardandoComando = false;
 
             if (response.Tef.IsNull() || response.Tef.HouveErro)
             {
-                if (response.Retorno) response.SetarErro(response.Tef.MensagemResultado);
+                var mensagemErro = response.Tef.MensagemResultado.Contains("QRCODE") ? "Tempo limite atingido" : response.Tef.MensagemResultado;
+                if (response.Retorno) response.SetarErro(mensagemErro);
             }
             else if (response.Tef.PodeConfirmar)
             {
@@ -368,13 +376,20 @@ namespace Vip.ElginTEF
             return FinalizaComando<BaseResponse<IniciarOperacaoResponse>>(retorno);
         }
 
-        private BaseResponse<TransacaoResponse> ChamarFluxoPagamento(TipoFluxo tipoFluxo, int codigoOperacao, FluxoRequest fluxoRequest)
+        private BaseResponse<TransacaoResponse> ChamarFluxoPagamento(TipoFluxo tipoFluxo, int codigoOperacao, FluxoRequest fluxoRequest, CancellationToken cancellationToken = default)
         {
             Guard.Against<VipException>(fluxoRequest.IsNull(), "Requisição de fluxo vazio");
 
             var retornoFluxo = "";
+
             while (fluxoRequest.ColetaRetorno.IsNotNull())
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    fluxoRequest.ColetaRetorno = "9";
+                    OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Transação cancelada por limite de tempo"));
+                }
+
                 var payload = fluxoRequest.Serialize();
                 retornoFluxo = tipoFluxo switch
                 {
@@ -388,6 +403,9 @@ namespace Vip.ElginTEF
 
                 if (tipoFluxo == TipoFluxo.PagamentoPix && retornoFluxo.Contains("QRCODE"))
                     OnExibirQrCodePix.Raise(this, ExibirQrCodePixEventArgs.Map(fluxoCommand.Tef.MensagemResultado));
+
+                if (fluxoCommand.IsNull() & (fluxoCommand.Tef.ColetaRetorno == "9"))
+                    break;
 
                 fluxoRequest = ObterNovoFluxoRequest(fluxoCommand, tipoFluxo);
                 if (fluxoRequest.IsNull() || fluxoRequest.ColetaRetorno == "9")
