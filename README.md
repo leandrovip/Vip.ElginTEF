@@ -15,13 +15,14 @@
   </a>
 </p>
 
-Biblioteca responsável pela controle e fluxo de operações do TEF Elgin utilizando o modo DLL.
+Biblioteca responsável pela controle e fluxo de operações do TEF Elgin e TEF HUB utilizando o modo DLL.
 
 ## Funções implementadas
 
 - RealizarPagamento (operações de crédito, débito, voucher, frota, etc)
 - RealizarPagamentoPIX
 - RealizarAdm (cancelamento, pendência, reimpressão e extrato)
+- CancelarOperacao (cancela transação atual, principalmente para PIX)
 
 ## Pré requisitos
 
