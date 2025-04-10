@@ -23,6 +23,8 @@ namespace Vip.ElginTEF
         private bool _aguardandoComando;
         private ModeloLib _modeloLib;
         private string _caminhoLib;
+        private FluxoRequest _fluxoRequest;
+        private bool _cancelarTransacao;
 
         #endregion
 
@@ -44,6 +46,7 @@ namespace Vip.ElginTEF
             _modeloLib = ModeloLib.StdCall;
             _caminhoLib = @".\E1_Tef01.dll";
             _aguardandoComando = false;
+            _cancelarTransacao = false;
         }
 
         ~TefService()
@@ -89,7 +92,7 @@ namespace Vip.ElginTEF
         public Configuracao Configuracao { get; private set; }
 
         /// <summary>
-        /// Timeout em segundos
+        ///     Timeout em segundos
         /// </summary>
         public int Timeout { get; set; } = 240;
 
@@ -348,6 +351,17 @@ namespace Vip.ElginTEF
             return response;
         }
 
+        public void CancelarOperacaoTEF()
+        {
+            if (_fluxoRequest.IsNull())
+            {
+                OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Nenhuma transação ativa para cancelar"));
+                return;
+            }
+
+            _cancelarTransacao = true;
+        }
+
         #endregion
 
         #region Métodos Privados
@@ -380,17 +394,19 @@ namespace Vip.ElginTEF
         {
             Guard.Against<VipException>(fluxoRequest.IsNull(), "Requisição de fluxo vazio");
 
+            _fluxoRequest = fluxoRequest;
+
             var retornoFluxo = "";
 
-            while (fluxoRequest.ColetaRetorno.IsNotNull())
+            while (_fluxoRequest.ColetaRetorno.IsNotNull())
             {
-                if (cancellationToken.IsCancellationRequested)
+                if (cancellationToken.IsCancellationRequested || _cancelarTransacao)
                 {
-                    fluxoRequest.ColetaRetorno = "9";
+                    _fluxoRequest.ColetaRetorno = "9";
                     OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Transação cancelada por limite de tempo"));
                 }
 
-                var payload = fluxoRequest.Serialize();
+                var payload = _fluxoRequest.Serialize();
                 retornoFluxo = tipoFluxo switch
                 {
                     TipoFluxo.Pagamento => _library.RealizarPagamentoTEF(codigoOperacao, payload, false),
@@ -407,8 +423,8 @@ namespace Vip.ElginTEF
                 if (fluxoCommand.IsNull() & (fluxoCommand.Tef.ColetaRetorno == "9"))
                     break;
 
-                fluxoRequest = ObterNovoFluxoRequest(fluxoCommand, tipoFluxo);
-                if (fluxoRequest.IsNull() || fluxoRequest.ColetaRetorno == "9")
+                _fluxoRequest = ObterNovoFluxoRequest(fluxoCommand, tipoFluxo);
+                if (_fluxoRequest.IsNull() || _fluxoRequest.ColetaRetorno == "9")
                 {
                     OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo(fluxoCommand?.Tef.MensagemResultado));
                     break;
@@ -418,6 +434,10 @@ namespace Vip.ElginTEF
             }
 
             AguardandoComando = false;
+
+            _fluxoRequest = null;
+            _cancelarTransacao = false;
+
             var response = FinalizaComando<BaseResponse<TransacaoResponse>>(retornoFluxo);
             return response;
         }

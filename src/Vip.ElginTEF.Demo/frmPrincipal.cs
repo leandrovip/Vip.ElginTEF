@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vip.ElginTEF.Enums;
 using Vip.ElginTEF.Events;
@@ -11,6 +12,8 @@ namespace Vip.ElginTEF.Demo
 {
     public partial class frmPrincipal : Form
     {
+        private TefService _tefService;
+
         #region Construtores
 
         public frmPrincipal()
@@ -26,12 +29,12 @@ namespace Vip.ElginTEF.Demo
         {
             try
             {
-                var service = ObterServico();
+                _tefService = ObterServico();
 
-                var response = service.ConfigurarDados();
+                var response = _tefService.ConfigurarDados();
                 ImprimirRetorno("Configurar PDV", response);
 
-                var responseProdutoTef = service.ObterProdutoTEF();
+                var responseProdutoTef = _tefService.ObterProdutoTEF();
                 ImprimirRetorno("ObterProdutoTEF", responseProdutoTef.ToString());
             }
             catch (Exception exception)
@@ -40,7 +43,7 @@ namespace Vip.ElginTEF.Demo
             }
         }
 
-        private void btnPagamentoTef_Click(object sender, EventArgs e)
+        private async void btnPagamentoTef_Click(object sender, EventArgs e)
         {
             #region Validações
 
@@ -52,15 +55,15 @@ namespace Vip.ElginTEF.Demo
 
             #endregion
 
-            var service = ObterServico();
-            service.OnMensagemUsuario += ImprimirMensagemUsuario;
-            service.OnReceberInformacao += EnviarInformacaoFluxo;
+            _tefService = ObterServico();
+            _tefService.OnMensagemUsuario += ImprimirMensagemUsuario;
+            _tefService.OnReceberInformacao += EnviarInformacaoFluxo;
 
             txtMensagemUsuario.Text = "Transação TEF iniciada";
             txtMensagemUsuario.Refresh();
 
             var request = new PagamentoRequest(ObterTipoOperacao(), txtValorTotal.Text.ToDecimal(), txtParcelas.Text.ToInt(1));
-            var response = service.RealizarPagamento(request);
+            var response = await Task.Run(() => _tefService.RealizarPagamento(request));
             if (response.IsNull() || !response.Retorno)
             {
                 MessageBox.Show($"Houve um erro na transação!\r\nMensagem: {response?.Mensagem}");
@@ -84,10 +87,11 @@ namespace Vip.ElginTEF.Demo
             txtMensagemUsuario.Text = "Aguardando próxima transação";
             txtMensagemUsuario.Refresh();
 
-            service.Dispose();
+            _tefService.Dispose();
+            _tefService = null;
         }
 
-        private void btnPagamentoPix_Click(object sender, EventArgs e)
+        private async void btnPagamentoPix_Click(object sender, EventArgs e)
         {
             #region Validações
 
@@ -99,16 +103,18 @@ namespace Vip.ElginTEF.Demo
 
             #endregion
 
-            var service = ObterServico();
-            service.OnMensagemUsuario += ImprimirMensagemUsuario;
-            service.OnReceberInformacao += EnviarInformacaoFluxo;
-            service.OnExibirQrCodePix += ExibirQrCodePix;
+            _tefService = ObterServico();
+            _tefService.OnMensagemUsuario += ImprimirMensagemUsuario;
+            _tefService.OnReceberInformacao += EnviarInformacaoFluxo;
+            _tefService.OnExibirQrCodePix += ExibirQrCodePix;
 
             txtMensagemUsuario.Text = "Transação PIX TEF iniciada";
             txtMensagemUsuario.Refresh();
 
             var valorRequest = txtValorPix.Text.ToDecimal();
-            var response = service.RealizarPagamentoPIX(valorRequest);
+
+            var response = await Task.Run(() => _tefService.RealizarPagamentoPIX(valorRequest));
+
             if (response.IsNull() || !response.Retorno)
             {
                 MessageBox.Show($"Houve um erro na transação!\r\nMensagem: {response?.Mensagem}");
@@ -138,14 +144,15 @@ namespace Vip.ElginTEF.Demo
             ptbQrCode.Image = null;
             ptbQrCode.Refresh();
 
-            service.Dispose();
+            _tefService.Dispose();
+            _tefService = null;
         }
 
         private void btnAdministracaoTef_Click(object sender, EventArgs e)
         {
-            var service = ObterServico();
-            service.OnMensagemUsuario += ImprimirMensagemUsuario;
-            service.OnReceberInformacao += EnviarInformacaoFluxo;
+            _tefService = ObterServico();
+            _tefService.OnMensagemUsuario += ImprimirMensagemUsuario;
+            _tefService.OnReceberInformacao += EnviarInformacaoFluxo;
 
             txtMensagemUsuario.Text = "Administração TEF iniciada";
             txtMensagemUsuario.Refresh();
@@ -153,7 +160,7 @@ namespace Vip.ElginTEF.Demo
             var dataTransacao = txtDataTransacao.Text.IsNullOrEmpty() ? (DateTime?) null : DateTime.Parse(txtDataTransacao.Text);
             var valorTransacao = txtValorTransacao.Text.IsNullOrEmpty() ? (decimal?) null : txtValorTransacao.Text.ToDecimal();
             var request = new AdmRequest(ObterTipoOperacaoAdm(), "lojista", "lojista1#", dataTransacao, txtNsuTransacao.Text, valorTransacao);
-            var response = service.RealizarAdm(request);
+            var response = _tefService.RealizarAdm(request);
             if (response.IsNull() || !response.Retorno)
             {
                 MessageBox.Show($"Houve um erro na operação!\r\nMensagem: {response?.Mensagem}");
@@ -178,7 +185,8 @@ namespace Vip.ElginTEF.Demo
             txtMensagemUsuario.Text = "Aguardando próxima transação";
             txtMensagemUsuario.Refresh();
 
-            service.Dispose();
+            _tefService.Dispose();
+            _tefService = null;
         }
 
         private void EnviarInformacaoFluxo(object sender, ReceberInformacaoEventArgs e)
@@ -219,6 +227,11 @@ namespace Vip.ElginTEF.Demo
             txtRetorno.Text = "";
         }
 
+        private void btnCancelarTransacao_Click(object sender, EventArgs e)
+        {
+            _tefService?.CancelarOperacaoTEF();
+        }
+
         #endregion
 
         #region Métodos
@@ -236,7 +249,7 @@ namespace Vip.ElginTEF.Demo
             tef.Configuracao.PortaClientTCP = 60906;
             tef.ModeloLib = ModeloLib.StdCall;
             tef.CaminhoLib = $@".\{txtNomeDll.Text}";
-            tef.Timeout = 30;
+            //tef.Timeout = 30;
 
             tef.Ativar();
 

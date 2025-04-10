@@ -71,6 +71,7 @@
             this.tbpAdministracao = new System.Windows.Forms.TabPage();
             this.txtNomeDll = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnCancelarTransacao = new System.Windows.Forms.Button();
             this.gpbTipoOperacao.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -440,10 +441,10 @@
             this.tbpPagamentoPix.Controls.Add(this.lblValorPix);
             this.tbpPagamentoPix.Controls.Add(this.txtValorPix);
             this.tbpPagamentoPix.Controls.Add(this.btnPagamentoPix);
-            this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 22);
+            this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 23);
             this.tbpPagamentoPix.Name = "tbpPagamentoPix";
             this.tbpPagamentoPix.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpPagamentoPix.Size = new System.Drawing.Size(948, 215);
+            this.tbpPagamentoPix.Size = new System.Drawing.Size(948, 214);
             this.tbpPagamentoPix.TabIndex = 1;
             this.tbpPagamentoPix.Text = "Pagamento PIX";
             this.tbpPagamentoPix.UseVisualStyleBackColor = true;
@@ -488,7 +489,7 @@
             // 
             this.btnPagamentoPix.Location = new System.Drawing.Point(15, 78);
             this.btnPagamentoPix.Name = "btnPagamentoPix";
-            this.btnPagamentoPix.Size = new System.Drawing.Size(129, 52);
+            this.btnPagamentoPix.Size = new System.Drawing.Size(138, 52);
             this.btnPagamentoPix.TabIndex = 4;
             this.btnPagamentoPix.Text = "Pagamento PIX TEF";
             this.btnPagamentoPix.UseVisualStyleBackColor = true;
@@ -499,10 +500,10 @@
             this.tbpAdministracao.Controls.Add(this.groupBox1);
             this.tbpAdministracao.Controls.Add(this.groupBox2);
             this.tbpAdministracao.Controls.Add(this.btnAdministracaoTef);
-            this.tbpAdministracao.Location = new System.Drawing.Point(4, 22);
+            this.tbpAdministracao.Location = new System.Drawing.Point(4, 23);
             this.tbpAdministracao.Name = "tbpAdministracao";
             this.tbpAdministracao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpAdministracao.Size = new System.Drawing.Size(948, 215);
+            this.tbpAdministracao.Size = new System.Drawing.Size(948, 214);
             this.tbpAdministracao.TabIndex = 2;
             this.tbpAdministracao.Text = "Administração";
             this.tbpAdministracao.UseVisualStyleBackColor = true;
@@ -527,10 +528,21 @@
             this.label1.TabIndex = 22;
             this.label1.Text = "Nome da DLL";
             // 
+            // btnCancelarTransacao
+            // 
+            this.btnCancelarTransacao.Location = new System.Drawing.Point(479, 12);
+            this.btnCancelarTransacao.Name = "btnCancelarTransacao";
+            this.btnCancelarTransacao.Size = new System.Drawing.Size(138, 52);
+            this.btnCancelarTransacao.TabIndex = 10;
+            this.btnCancelarTransacao.Text = "Cancelar Transação";
+            this.btnCancelarTransacao.UseVisualStyleBackColor = true;
+            this.btnCancelarTransacao.Click += new System.EventHandler(this.btnCancelarTransacao_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(975, 643);
+            this.Controls.Add(this.btnCancelarTransacao);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNomeDll);
             this.Controls.Add(this.tbpFuncoes);
@@ -607,6 +619,7 @@
         private System.Windows.Forms.PictureBox ptbQrCode;
         private System.Windows.Forms.TextBox txtNomeDll;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnCancelarTransacao;
     }
 }
 
