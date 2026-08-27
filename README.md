@@ -112,6 +112,19 @@ tef.OnExibirQrCodePix += (s, e) =>
 };
 ```
 
+> **Nota WinForms/WPF:** os eventos são disparados na thread da transação (background, dentro de `Task.Run`/`ChamarFluxoPagamento`). Ao tocar controles, faça marshal:
+> ```csharp
+> tef.OnMensagemUsuario += (s, e) => {
+>     if (InvokeRequired) { BeginInvoke(new Action(() => txtLog.Text = e.Mensagem)); return; }
+>     txtLog.Text = e.Mensagem;
+> };
+> tef.OnReceberInformacao += (s, e) => {
+>     if (InvokeRequired) { Invoke(new Action(() => Coletar(s, e))); return; } // síncrono: lib aguarda InformacaoColeta
+>     // ... ShowDialog ...
+>     tef.InformacaoColeta = resultado;
+> };
+> ```
+
 > O loop de coleta roda dentro de `ChamarFluxoPagamento()` até `ColetaRetorno == "9"` ou conclusão com `Retorno == "0"/"1"`. Alguns `ColetaPalavraChave` (`transacao_parcela`, `formapagamento`, `valortotal` etc.) são preenchidos automaticamente a partir do `PagamentoRequest`/`AdmRequest`; demais chaves caem no `OnReceberInformacao`.
 
 ## Exemplos
@@ -167,6 +180,7 @@ var resp = await Task.Run(() => tef.RealizarPagamento(debito));
 ```csharp
 tef.OnExibirQrCodePix += (s, e) =>
 {
+    if (pictureBox.InvokeRequired) { pictureBox.BeginInvoke(new Action(() => { pictureBox.Image = ByteArrayToImage(e.QrCode); pictureBox.Refresh(); })); return; }
     pictureBox.Image = ByteArrayToImage(e.QrCode);
     pictureBox.Refresh();
 };
