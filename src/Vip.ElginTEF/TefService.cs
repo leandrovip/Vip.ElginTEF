@@ -200,7 +200,17 @@ namespace Vip.ElginTEF
 
             OnMensagemUsuario.Raise(this, MensagemUsuarioEventArgs.Novo("Aguarde, iniciando pagamento"));
 
-            var modelInicial = new {operacao.Tef.Sequencial, ValorTotal = request.ValorTotalFormatado};
+            var modelInicial = new
+            {
+                operacao.Tef.Sequencial,
+                ValorTotal = request.ValorTotalFormatado,
+                NumeroParcelas = request.QuantidadeParcelas > 1 ? request.QuantidadeParcelas.ToString() : null,
+                TipoFinanciamento = request.SeParcelado() ? "Estabelecimento" : null,
+                FormaPagamento = request.TipoOperacao.Equals(TipoOperacao.CartaoCredito)
+                    ? request.QuantidadeParcelas > 1 ? "Parcelado" : "A vista"
+                    : null
+            };
+
             var payload = modelInicial.Serialize();
             var retorno = _library.RealizarPagamentoTEF(request.CodigoOperacao, payload, true);
             var pagamentoCommand = FinalizaComando<BaseResponse<FluxoResponse>>(retorno);
@@ -233,6 +243,7 @@ namespace Vip.ElginTEF
             }
 
             FinalizarOperacaoTEF();
+            response.Tef?.RemoverPontuacaoCnpjCredenciadora();
             return response;
         }
 
@@ -288,6 +299,7 @@ namespace Vip.ElginTEF
             }
 
             FinalizarOperacaoTEF();
+            response.Tef?.RemoverPontuacaoCnpjCredenciadora();
             return response;
         }
 
@@ -468,18 +480,25 @@ namespace Vip.ElginTEF
                 switch (command.Tef.ColetaPalavraChave?.ToLower())
                 {
                     case "transacao_pagamento":
+                    case "formapagamento":
                         fluxo.ColetaInformacao = _parcelasPagamento > 1 ? "Parcelado" : "A vista";
                         break;
                     case "transacao_parcela":
+                    case "numeroparcelas":
                         fluxo.ColetaInformacao = _parcelasPagamento.ToString();
+                        break;
+                    case "tipofinanciamento":
+                        fluxo.ColetaInformacao = "Estabelecimento";
                         break;
                     case "transacao_data":
                         fluxo.ColetaInformacao = _dataTransacao.HasValue ? _dataTransacao.Value.ToString("dd/MM/yyyy") : ObterInformacaoColeta(args);
                         break;
                     case "transacao_nsu":
+                    case "nsutransacao":
                         fluxo.ColetaInformacao = _nsuTransacao.IsNotNullOrEmpty() ? _nsuTransacao : ObterInformacaoColeta(args);
                         break;
                     case "transacao_valor":
+                    case "valortotal":
                         fluxo.ColetaInformacao = _valorTransacao.IsNotNullOrEmpty() ? _valorTransacao : ObterInformacaoColeta(args);
                         break;
                     case "terminal":

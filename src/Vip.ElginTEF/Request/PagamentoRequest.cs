@@ -22,7 +22,16 @@ public class PagamentoRequest
     {
         TipoOperacao = tipoOperacao;
         Valor = valor;
-        QuantidadeParcelas = quantidadeParcelas;
+        QuantidadeParcelas = quantidadeParcelas > 1 && tipoOperacao.Equals(TipoOperacao.CartaoDebito) ? 1 : quantidadeParcelas;
+    }
+
+    #endregion
+
+    #region Métodos
+
+    public bool SeParcelado()
+    {
+        return TipoOperacao.Equals(TipoOperacao.CartaoCredito) && QuantidadeParcelas > 1;
     }
 
     #endregion

@@ -55,6 +55,8 @@ namespace Vip.ElginTEF.Demo
 
             #endregion
 
+            ImprimirNovaChamada("PAGAMENTO");
+
             _tefService = ObterServico();
             _tefService.OnMensagemUsuario += ImprimirMensagemUsuario;
             _tefService.OnReceberInformacao += EnviarInformacaoFluxo;
@@ -77,9 +79,15 @@ namespace Vip.ElginTEF.Demo
 
             if (response.Tef.PodeConfirmar)
             {
+                ImprimirRetorno("NomeProvedor", response.Tef.NomeProvedor);
                 ImprimirRetorno("CodigoAutorizacao", response.Tef.CodigoAutorizacao);
                 ImprimirRetorno("NsuTransacao", response.Tef.NsuTransacao);
                 ImprimirRetorno("FormaPagamento", response.Tef.FormaPagamento);
+                ImprimirRetorno("NumeroParcelas", response.Tef.NumeroParcelas);
+                ImprimirRetorno("TipoFinanciamento", response.Tef.TipoFinanciamento);
+                ImprimirRetorno("NomeBandeira", response.Tef.NomeBandeira);
+                ImprimirRetorno("TipoCartao", response.Tef.TipoCartao);
+                ImprimirRetorno("CnpjCredenciadora", response.Tef.CnpjCredenciadora);
                 ImprimirRetorno("ComprovanteUsuario", response.Tef.ComprovanteDiferenciadoPortador);
                 ImprimirRetorno("ComprovanteLoja", response.Tef.ComprovanteDiferenciadoLoja);
             }
@@ -111,8 +119,9 @@ namespace Vip.ElginTEF.Demo
             txtMensagemUsuario.Text = "Transação PIX TEF iniciada";
             txtMensagemUsuario.Refresh();
 
-            var valorRequest = txtValorPix.Text.ToDecimal();
+            ImprimirNovaChamada("PAGAMENTO PIX");
 
+            var valorRequest = txtValorPix.Text.ToDecimal();
             var response = await Task.Run(() => _tefService.RealizarPagamentoPIX(valorRequest));
 
             if (response.IsNull() || !response.Retorno)
@@ -156,6 +165,8 @@ namespace Vip.ElginTEF.Demo
 
             txtMensagemUsuario.Text = "Administração TEF iniciada";
             txtMensagemUsuario.Refresh();
+
+            ImprimirNovaChamada("ADM");
 
             var dataTransacao = txtDataTransacao.Text.IsNullOrEmpty() ? (DateTime?) null : DateTime.Parse(txtDataTransacao.Text);
             var valorTransacao = txtValorTransacao.Text.IsNullOrEmpty() ? (decimal?) null : txtValorTransacao.Text.ToDecimal();
@@ -278,14 +289,25 @@ namespace Vip.ElginTEF.Demo
             return TipoOperacaoAdm.Nenhum;
         }
 
+        private void ImprimirNovaChamada(string tipo)
+        {
+            var mensagem = new string('#', 70) + "\r\n";
+            mensagem += $"Nova Chamada iniciada do tipo: {tipo} as {DateTime.Now}\r\n";
+            mensagem += new string('#', 70) + "\r\n\r\n";
+
+            txtRetorno.Text += mensagem;
+            txtRetorno.SelectionStart = txtRetorno.TextLength;
+            txtRetorno.ScrollToCaret();
+        }
+
         private void ImprimirRetorno(string chamada, BaseResponse response)
         {
-            var mensagem = new string('#', 20) + "\r\n";
+            var mensagem = new string('-', 50) + "\r\n";
             mensagem += $"Chamada: {chamada}\r\n";
             mensagem += $"Código: {response.Codigo}\r\n";
             mensagem += $"Descrição: {response.DescricaoRetorno}\r\n";
             mensagem += $"Mensagem: {response.Mensagem}\r\n";
-            mensagem += new string('#', 20) + "\r\n\r\n";
+            mensagem += new string('-', 50) + "\r\n\r\n";
 
             txtRetorno.Text += mensagem;
             txtRetorno.SelectionStart = txtRetorno.TextLength;
@@ -294,10 +316,10 @@ namespace Vip.ElginTEF.Demo
 
         private void ImprimirRetorno(string chamada, string retorno)
         {
-            var mensagem = new string('#', 20) + "\r\n";
-            mensagem += $"Chamada: {chamada}\r\n";
+            var mensagem = new string('-', 50) + "\r\n";
+            mensagem += $"Chave..: {chamada}\r\n";
             mensagem += $"Retorno: {retorno.TrimVip()}\r\n";
-            mensagem += new string('#', 20) + "\r\n\r\n";
+            mensagem += new string('-', 50) + "\r\n\r\n";
 
             txtRetorno.Text += mensagem;
             txtRetorno.SelectionStart = txtRetorno.TextLength;

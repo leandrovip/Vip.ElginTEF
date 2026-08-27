@@ -15,7 +15,6 @@ public class TransacaoResponse
     public string FormaPagamento { get; set; }
     public string IdentificadorEstabelecimento { get; set; }
     public string IdentificadorPontoCaptura { get; set; }
-    public string Loja { get; set; }
     public string MensagemResultado { get; set; }
     public string NomeBandeira { get; set; }
     public string NomeEstabelecimento { get; set; }
@@ -23,20 +22,28 @@ public class TransacaoResponse
     public string NomeProvedor { get; set; }
     public string NsuTerminal { get; set; }
     public string NsuTransacao { get; set; }
+    public string NumeroParcelas { get; set; }
     public string PanMascarado { get; set; }
     public string ResultadoTransacao { get; set; }
     public string Retorno { get; set; }
     public string Sequencial { get; set; }
     public string Servico { get; set; }
     public string TipoCartao { get; set; }
+    public string TipoFinanciamento { get; set; }
     public string Transacao { get; set; }
     public string UniqueID { get; set; }
     public string ValorTotal { get; set; }
-
+    public string Loja { get; set; }
+    
     public TipoTransacao TipoTransacao => ObterTipoTransacao();
     public bool PodeConfirmar => SePodeConfirmar();
     public bool PodeFinalizar => SePodeFinalizar();
     public bool HouveErro => SeHouveErro();
+
+    public void RemoverPontuacaoCnpjCredenciadora()
+    {
+        CnpjCredenciadora = CnpjCredenciadora.TrimVip().Replace(".", "").Replace("-", "").Replace("/", "");
+    }
 
     #endregion
 
