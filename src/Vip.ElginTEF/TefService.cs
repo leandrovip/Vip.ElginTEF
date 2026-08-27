@@ -432,7 +432,7 @@ namespace Vip.ElginTEF
                 if (tipoFluxo == TipoFluxo.PagamentoPix && retornoFluxo.Contains("QRCODE"))
                     OnExibirQrCodePix.Raise(this, ExibirQrCodePixEventArgs.Map(fluxoCommand.Tef.MensagemResultado));
 
-                if (fluxoCommand.IsNull() & (fluxoCommand.Tef.ColetaRetorno == "9"))
+                if (fluxoCommand.IsNull() || fluxoCommand.Tef?.ColetaRetorno == "9")
                     break;
 
                 _fluxoRequest = ObterNovoFluxoRequest(fluxoCommand, tipoFluxo);
