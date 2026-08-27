@@ -202,6 +202,12 @@ namespace Vip.ElginTEF.Demo
 
         private void EnviarInformacaoFluxo(object sender, ReceberInformacaoEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => EnviarInformacaoFluxo(sender, e)));
+                return;
+            }
+
             var informacaoRetorno = "";
             if (e.SeEsperaOpcoes && e.Opcoes.IsNotEmpty())
             {
@@ -221,6 +227,12 @@ namespace Vip.ElginTEF.Demo
 
         private void ExibirQrCodePix(object sender, ExibirQrCodePixEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() => ExibirQrCodePix(sender, e)));
+                return;
+            }
+
             if (e.QrCode.IsNull()) return;
             ptbQrCode.Image = ByteArrayToImage(e.QrCode);
             ptbQrCode.Refresh();
@@ -228,6 +240,12 @@ namespace Vip.ElginTEF.Demo
 
         private void ImprimirMensagemUsuario(object sender, MensagemUsuarioEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() => ImprimirMensagemUsuario(sender, e)));
+                return;
+            }
+
             txtMensagemUsuario.Text = e?.Mensagem;
             txtMensagemUsuario.Refresh();
         }
