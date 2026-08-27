@@ -10,6 +10,8 @@ namespace Vip.ElginTEF.Core
 
         private static VipLPStr marshaler;
 
+        [ThreadStatic] private static byte[] _threadBuffer;
+
         #endregion Fields
 
         #region Methods
@@ -29,10 +31,19 @@ namespace Vip.ElginTEF.Core
             while (Marshal.ReadByte(pNativeData, len) != 0)
                 len++;
 
-            var buffer = new byte[len];
-            Marshal.Copy(pNativeData, buffer, 0, len);
+            if (len == 0)
+                return string.Empty;
 
-            return Encoding.UTF8.GetString(buffer);
+            // reusa buffer por thread para evitar byte[] por retorno nativo (5-15x por transação)
+            var buffer = _threadBuffer;
+            if (buffer == null || buffer.Length < len)
+            {
+                buffer = new byte[Math.Max(len, 1024)];
+                _threadBuffer = buffer;
+            }
+
+            Marshal.Copy(pNativeData, buffer, 0, len);
+            return Encoding.UTF8.GetString(buffer, 0, len);
         }
 
         /// <inheritdoc />
