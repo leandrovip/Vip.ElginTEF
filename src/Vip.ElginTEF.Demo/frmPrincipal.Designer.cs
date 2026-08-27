@@ -84,6 +84,7 @@
             // 
             // btnConfiguraPdv
             // 
+            this.btnConfiguraPdv.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
             this.btnConfiguraPdv.Location = new System.Drawing.Point(12, 12);
             this.btnConfiguraPdv.Name = "btnConfiguraPdv";
             this.btnConfiguraPdv.Size = new System.Drawing.Size(129, 52);
@@ -97,21 +98,21 @@
             this.txtRetorno.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRetorno.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRetorno.Location = new System.Drawing.Point(12, 393);
+            this.txtRetorno.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRetorno.Location = new System.Drawing.Point(12, 395);
             this.txtRetorno.Multiline = true;
             this.txtRetorno.Name = "txtRetorno";
             this.txtRetorno.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtRetorno.Size = new System.Drawing.Size(951, 238);
+            this.txtRetorno.Size = new System.Drawing.Size(860, 194);
             this.txtRetorno.TabIndex = 1;
             // 
             // lblRetorno
             // 
             this.lblRetorno.AutoSize = true;
-            this.lblRetorno.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRetorno.Location = new System.Drawing.Point(12, 376);
+            this.lblRetorno.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRetorno.Location = new System.Drawing.Point(13, 378);
             this.lblRetorno.Name = "lblRetorno";
-            this.lblRetorno.Size = new System.Drawing.Size(137, 14);
+            this.lblRetorno.Size = new System.Drawing.Size(143, 14);
             this.lblRetorno.TabIndex = 2;
             this.lblRetorno.Text = "Retorno / Chamadas";
             // 
@@ -256,7 +257,7 @@
             this.txtMensagemUsuario.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMensagemUsuario.Location = new System.Drawing.Point(12, 334);
             this.txtMensagemUsuario.Name = "txtMensagemUsuario";
-            this.txtMensagemUsuario.Size = new System.Drawing.Size(918, 30);
+            this.txtMensagemUsuario.Size = new System.Drawing.Size(827, 30);
             this.txtMensagemUsuario.TabIndex = 12;
             this.txtMensagemUsuario.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -265,7 +266,7 @@
             this.btnLimpar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLimpar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLimpar.BackgroundImage")));
             this.btnLimpar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnLimpar.Location = new System.Drawing.Point(937, 336);
+            this.btnLimpar.Location = new System.Drawing.Point(850, 334);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(27, 28);
             this.btnLimpar.TabIndex = 14;
@@ -406,8 +407,7 @@
             // 
             // tbpFuncoes
             // 
-            this.tbpFuncoes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbpFuncoes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbpFuncoes.Controls.Add(this.tbpPagamento);
             this.tbpFuncoes.Controls.Add(this.tbpPagamentoPix);
@@ -415,7 +415,7 @@
             this.tbpFuncoes.Location = new System.Drawing.Point(12, 70);
             this.tbpFuncoes.Name = "tbpFuncoes";
             this.tbpFuncoes.SelectedIndex = 0;
-            this.tbpFuncoes.Size = new System.Drawing.Size(956, 241);
+            this.tbpFuncoes.Size = new System.Drawing.Size(865, 241);
             this.tbpFuncoes.TabIndex = 20;
             // 
             // tbpPagamento
@@ -429,7 +429,7 @@
             this.tbpPagamento.Location = new System.Drawing.Point(4, 23);
             this.tbpPagamento.Name = "tbpPagamento";
             this.tbpPagamento.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpPagamento.Size = new System.Drawing.Size(948, 214);
+            this.tbpPagamento.Size = new System.Drawing.Size(857, 214);
             this.tbpPagamento.TabIndex = 0;
             this.tbpPagamento.Text = "Pagamento";
             this.tbpPagamento.UseVisualStyleBackColor = true;
@@ -441,10 +441,10 @@
             this.tbpPagamentoPix.Controls.Add(this.lblValorPix);
             this.tbpPagamentoPix.Controls.Add(this.txtValorPix);
             this.tbpPagamentoPix.Controls.Add(this.btnPagamentoPix);
-            this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 23);
+            this.tbpPagamentoPix.Location = new System.Drawing.Point(4, 22);
             this.tbpPagamentoPix.Name = "tbpPagamentoPix";
             this.tbpPagamentoPix.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpPagamentoPix.Size = new System.Drawing.Size(948, 214);
+            this.tbpPagamentoPix.Size = new System.Drawing.Size(948, 215);
             this.tbpPagamentoPix.TabIndex = 1;
             this.tbpPagamentoPix.Text = "Pagamento PIX";
             this.tbpPagamentoPix.UseVisualStyleBackColor = true;
@@ -500,10 +500,10 @@
             this.tbpAdministracao.Controls.Add(this.groupBox1);
             this.tbpAdministracao.Controls.Add(this.groupBox2);
             this.tbpAdministracao.Controls.Add(this.btnAdministracaoTef);
-            this.tbpAdministracao.Location = new System.Drawing.Point(4, 23);
+            this.tbpAdministracao.Location = new System.Drawing.Point(4, 22);
             this.tbpAdministracao.Name = "tbpAdministracao";
             this.tbpAdministracao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpAdministracao.Size = new System.Drawing.Size(948, 214);
+            this.tbpAdministracao.Size = new System.Drawing.Size(948, 215);
             this.tbpAdministracao.TabIndex = 2;
             this.tbpAdministracao.Text = "Administração";
             this.tbpAdministracao.UseVisualStyleBackColor = true;
@@ -511,7 +511,7 @@
             // txtNomeDll
             // 
             this.txtNomeDll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNomeDll.Location = new System.Drawing.Point(766, 42);
+            this.txtNomeDll.Location = new System.Drawing.Point(675, 42);
             this.txtNomeDll.Name = "txtNomeDll";
             this.txtNomeDll.Size = new System.Drawing.Size(197, 22);
             this.txtNomeDll.TabIndex = 21;
@@ -522,7 +522,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(763, 25);
+            this.label1.Location = new System.Drawing.Point(672, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 14);
             this.label1.TabIndex = 22;
@@ -530,9 +530,10 @@
             // 
             // btnCancelarTransacao
             // 
-            this.btnCancelarTransacao.Location = new System.Drawing.Point(479, 12);
+            this.btnCancelarTransacao.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCancelarTransacao.Location = new System.Drawing.Point(147, 12);
             this.btnCancelarTransacao.Name = "btnCancelarTransacao";
-            this.btnCancelarTransacao.Size = new System.Drawing.Size(138, 52);
+            this.btnCancelarTransacao.Size = new System.Drawing.Size(152, 52);
             this.btnCancelarTransacao.TabIndex = 10;
             this.btnCancelarTransacao.Text = "Cancelar Transação";
             this.btnCancelarTransacao.UseVisualStyleBackColor = true;
@@ -541,7 +542,7 @@
             // frmPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(975, 643);
+            this.ClientSize = new System.Drawing.Size(884, 601);
             this.Controls.Add(this.btnCancelarTransacao);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNomeDll);
@@ -554,9 +555,10 @@
             this.Controls.Add(this.btnConfiguraPdv);
             this.Font = new System.Drawing.Font("Verdana", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(900, 640);
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Vip.ElginTEF - Demonstração - Contato: Leandro 17.99176-5035";
+            this.Text = "Vip.ElginTEF - Teste e Demonstração - Contato: Leandro 17.99176-5035";
             this.gpbTipoOperacao.ResumeLayout(false);
             this.gpbTipoOperacao.PerformLayout();
             this.groupBox1.ResumeLayout(false);
