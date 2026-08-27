@@ -193,7 +193,7 @@ namespace Vip.ElginTEF.Core
 
         public static bool IsOSX => LibLoader.IsOSX;
 
-        public static bool IsLinux => !LibLoader.IsOSX && LibLoader.IsWindows;
+        public static bool IsLinux => !LibLoader.IsWindows && !LibLoader.IsOSX;
 
         #endregion Properties
 
